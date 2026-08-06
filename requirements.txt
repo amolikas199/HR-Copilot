@@ -2,11 +2,14 @@
 pymupdf                 # reads text out of PDF files (imported as "fitz")
 
 # --- RAG framework ---
-langchain               # the orchestration framework (glue between the pieces)
-langchain-community     # community integrations (loaders, etc.)
-langchain-huggingface   # lets LangChain use local SentenceTransformers embeddings
-langchain-chroma        # lets LangChain talk to the Chroma vector database
-langchain-groq          # lets LangChain call the Groq LLM
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-huggingface
+langchain-chroma
+langchain-groq
+pymupdf
 
 # --- embeddings + vector store engines ---
 sentence-transformers   # runs the local BAAI/bge-small-en-v1.5 embedding model
