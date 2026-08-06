@@ -150,11 +150,8 @@ def login_page():
             <h2>Welcome back.</h2>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        st.text_input("EMAIL", value=DEMO_USERNAME, key="username", label_visibility="collapsed")
-    with col2:
-        st.text_input("PASSWORD", value=DEMO_PASSWORD, type="password", key="password", label_visibility="collapsed")
+    st.text_input("EMAIL", value=DEMO_USERNAME, key="username")
+    st.text_input("PASSWORD", value=DEMO_PASSWORD, type="password", key="password")
 
     if st.button("Sign in", use_container_width=True, type="primary"):
         username = st.session_state.username
