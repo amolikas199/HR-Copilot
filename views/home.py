@@ -60,28 +60,6 @@ st.markdown("""
         color: #94a3b8;
         margin-bottom: 8px;
     }
-
-    .stats {
-        display: flex;
-        gap: 16px;
-        margin-top: 20px;
-        justify-content: center;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-number {
-        font-size: 24px;
-        font-weight: bold;
-        color: #60a5fa;
-    }
-
-    .stat-label {
-        font-size: 12px;
-        color: #94a3b8;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -114,9 +92,7 @@ with col1:
         <div class="module-desc">Ask HR questions and get answers from your company documents with source citations.</div>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Open Knowledge Assistant", use_container_width=True, key="kb"):
-        st.session_state.current_page = "knowledge"
-        st.rerun()
+    st.page_link("views/knowledge.py", label="📚 Open Knowledge Assistant", use_container_width=True)
 
 with col2:
     st.markdown("""
@@ -126,9 +102,7 @@ with col2:
         <div class="module-desc">Get onboarding help or generate a personalized checklist for new joiners.</div>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Open Onboarding", use_container_width=True, key="ob"):
-        st.session_state.current_page = "onboarding"
-        st.rerun()
+    st.page_link("views/onboarding.py", label="🧭 Open Onboarding", use_container_width=True)
 
 col1, col2 = st.columns(2)
 
@@ -140,9 +114,7 @@ with col1:
         <div class="module-desc">Convert plain English descriptions into structured leave requests instantly.</div>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Open Leave Request", use_container_width=True, key="lr"):
-        st.session_state.current_page = "leave"
-        st.rerun()
+    st.page_link("views/leave.py", label="📝 Open Leave Request", use_container_width=True)
 
 with col2:
     st.markdown("""
@@ -152,9 +124,7 @@ with col2:
         <div class="module-desc">Compare old and new policy documents to see exactly what changed.</div>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("Open Policy Comparison", use_container_width=True, key="pc"):
-        st.session_state.current_page = "policy"
-        st.rerun()
+    st.page_link("views/policy_comparison.py", label="📋 Open Policy Comparison", use_container_width=True)
 
 col1, col2 = st.columns(2)
 
@@ -166,9 +136,7 @@ with col1:
         <div class="module-desc">Monitor low-confidence queries that need human review. Persists in MongoDB.</div>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("View Escalations", use_container_width=True, key="esc"):
-        st.session_state.current_page = "escalation"
-        st.rerun()
+    st.page_link("views/escalation.py", label="🚨 View Escalations", use_container_width=True)
 
 with col2:
     st.markdown("""
@@ -178,6 +146,4 @@ with col2:
         <div class="module-desc">Track user feedback and sentiment on answer quality. Real-time metrics & persistence.</div>
     </div>
     """, unsafe_allow_html=True)
-    if st.button("View Analytics", use_container_width=True, key="fb"):
-        st.session_state.current_page = "feedback"
-        st.rerun()
+    st.page_link("views/feedback.py", label="⭐ View Analytics", use_container_width=True)

@@ -11,10 +11,8 @@ st.set_page_config(
 st.markdown("""
 <style>
     [data-testid="stSidebar"] { display: none; }
-
     * { color: #e2e8f0; }
     body { background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); }
-
     .logo {
         font-size: 20px;
         font-weight: bold;
