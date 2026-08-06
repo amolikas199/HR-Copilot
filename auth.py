@@ -11,8 +11,6 @@ def check_login():
     return st.session_state.logged_in
 
 def login_page():
-    st.set_page_config(page_title="HR Copilot", layout="centered")
-
     st.markdown("""
     <style>
         * { margin: 0; padding: 0; }
