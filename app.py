@@ -43,6 +43,9 @@ pages = [
     st.Page("views/knowledge.py", title="Knowledge Assistant", icon="📚"),
     st.Page("views/onboarding.py", title="Onboarding Assistant", icon="🧭"),
     st.Page("views/leave.py", title="Leave Request", icon="📝"),
+    st.Page("views/policy_comparison.py", title="Policy Comparison", icon="📋"),
+    st.Page("views/escalation.py", title="Escalation Tickets", icon="🚨"),
+    st.Page("views/feedback.py", title="Feedback Analytics", icon="⭐"),
 ]
 
 # Build the sidebar navigation and run whichever page is selected.

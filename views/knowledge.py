@@ -5,6 +5,8 @@ views/knowledge.py  —  Module 1 page: the Knowledge Assistant.
 import streamlit as st
 from rag import ask
 from ui_utils import show_answer
+import escalation
+import feedback
 
 st.title("📚 Knowledge Assistant")
 st.caption("Ask a question about company HR policies. Answers come only from the HR documents.")
@@ -36,3 +38,18 @@ if question:
         st.error("Something went wrong while answering. Please try again.")
         st.stop()
     show_answer(result)
+
+    st.divider()
+    st.subheader("Was this answer helpful?")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("👍 Yes, helpful"):
+            feedback.save_feedback(question, result["answer"], result["chunks"], "helpful")
+            st.success("Thank you for your feedback!")
+
+    with col2:
+        if st.button("👎 No, not helpful"):
+            feedback.save_feedback(question, result["answer"], result["chunks"], "unhelpful")
+            escalation.escalate_query(question, result["confidence"], result["answer"])
+            st.warning("Your feedback has been escalated to HR. Thank you!")
