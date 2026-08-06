@@ -15,3 +15,6 @@ chromadb                # the actual vector database engine
 # --- UI + config ---
 streamlit               # the web UI
 python-dotenv           # loads your secret API key from a .env file
+
+# --- Database ---
+pymongo                 # MongoDB driver for Python

@@ -1,16 +1,11 @@
 import streamlit as st
 import escalation
-import json
 
 st.title("🚨 Escalation Tickets")
 
 st.write("View open HR escalation tickets from low-confidence queries.")
 
-try:
-    with open("escalation_tickets.json", "r") as f:
-        tickets = json.load(f)
-except FileNotFoundError:
-    tickets = []
+tickets = escalation.get_tickets()
 
 if not tickets:
     st.info("No escalation tickets yet. All queries have been answered with sufficient confidence!")
@@ -22,8 +17,8 @@ else:
 
     st.divider()
 
-    for ticket in reversed(tickets):
-        with st.expander(f"Ticket {ticket['id']} - {ticket['question'][:50]}..."):
+    for ticket in tickets:
+        with st.expander(f"Ticket {ticket['_id']} - {ticket['question'][:50]}..."):
             st.write(f"**Status**: {ticket['status']}")
             st.write(f"**Confidence**: {ticket['confidence']}%")
             st.write(f"**Question**: {ticket['question']}")

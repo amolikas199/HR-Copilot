@@ -1,36 +1,23 @@
-import json
 from datetime import datetime
+from db import feedback_logs
 
-def save_feedback(question, answer, chunks, rating, filename="feedback_log.json"):
-    """Save user feedback for analysis."""
+def save_feedback(question, answer, chunks, rating):
+    """Save user feedback to MongoDB."""
     feedback_entry = {
-        "id": datetime.now().strftime("%Y%m%d_%H%M%S"),
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": datetime.now(),
         "question": question,
         "answer": answer,
         "sources": [{"source": c["source"], "page": c["page"]} for c in chunks],
         "rating": rating,
     }
-
-    try:
-        with open(filename, "r") as f:
-            feedback = json.load(f)
-    except FileNotFoundError:
-        feedback = []
-
-    feedback.append(feedback_entry)
-
-    with open(filename, "w") as f:
-        json.dump(feedback, f, indent=2)
-
+    feedback_logs.insert_one(feedback_entry)
     return feedback_entry
 
-def get_feedback_stats(filename="feedback_log.json"):
-    """Get feedback statistics."""
-    try:
-        with open(filename, "r") as f:
-            feedback_list = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
+def get_feedback_stats():
+    """Get feedback statistics from MongoDB."""
+    feedback_list = list(feedback_logs.find())
+
+    if not feedback_list:
         return {"total": 0, "helpful": 0, "unhelpful": 0, "helpful_ratio": 0}
 
     total = len(feedback_list)
@@ -44,3 +31,7 @@ def get_feedback_stats(filename="feedback_log.json"):
         "unhelpful": unhelpful,
         "helpful_ratio": round(ratio, 1)
     }
+
+def get_feedback_entries():
+    """Get all feedback entries from MongoDB."""
+    return list(feedback_logs.find().sort("timestamp", -1))

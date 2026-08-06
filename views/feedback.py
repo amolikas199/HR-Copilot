@@ -1,6 +1,5 @@
 import streamlit as st
 import feedback
-import json
 
 st.title("⭐ Feedback & Analytics")
 
@@ -16,17 +15,13 @@ col4.metric("Helpful %", f"{stats.get('helpful_ratio', 0)}%")
 
 st.divider()
 
-try:
-    with open("feedback_log.json", "r") as f:
-        all_feedback = json.load(f)
-except FileNotFoundError:
-    all_feedback = []
+all_feedback = feedback.get_feedback_entries()
 
 if not all_feedback:
     st.info("No feedback yet. Answers will appear here once users rate them.")
 else:
     st.subheader("Recent Feedback")
-    for entry in reversed(all_feedback[-10:]):
+    for entry in all_feedback[:10]:
         col1, col2 = st.columns([4, 1])
         with col1:
             st.write(f"**Q**: {entry['question'][:60]}...")
