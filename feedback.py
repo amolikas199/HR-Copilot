@@ -29,14 +29,13 @@ def get_feedback_stats(filename="feedback_log.json"):
     """Get feedback statistics."""
     try:
         with open(filename, "r") as f:
-            feedback = json.load(f)
-    except FileNotFoundError:
-        return {"total": 0, "helpful": 0, "unhelpful": 0, "ratio": 0}
+            feedback_list = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {"total": 0, "helpful": 0, "unhelpful": 0, "helpful_ratio": 0}
 
-    total = len(feedback)
-    helpful = sum(1 for f in feedback if f["rating"] == "helpful")
+    total = len(feedback_list)
+    helpful = sum(1 for f in feedback_list if f.get("rating") == "helpful")
     unhelpful = total - helpful
-
     ratio = (helpful / total * 100) if total > 0 else 0
 
     return {

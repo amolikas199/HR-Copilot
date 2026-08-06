@@ -12,7 +12,7 @@ col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Feedback", stats["total"])
 col2.metric("Helpful 👍", stats["helpful"])
 col3.metric("Unhelpful 👎", stats["unhelpful"])
-col4.metric("Helpful %", f"{stats['helpful_ratio']}%")
+col4.metric("Helpful %", f"{stats.get('helpful_ratio', 0)}%")
 
 st.divider()
 
