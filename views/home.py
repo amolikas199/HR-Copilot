@@ -52,61 +52,35 @@ st.subheader("Available Modules")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
-    <div class="module-card">
-        <div class="module-icon">📚</div>
-        <div class="module-title">Knowledge Assistant</div>
-        <div class="module-desc">Ask HR policy questions and get answers grounded in your company documents.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    if st.button("📚 Knowledge Assistant", use_container_width=True, key="kb_main"):
+        st.switch_page("views/knowledge.py")
+    st.write("Ask HR policy questions and get answers grounded in your company documents.")
 
 with col2:
-    st.markdown("""
-    <div class="module-card">
-        <div class="module-icon">🧭</div>
-        <div class="module-title">Onboarding Assistant</div>
-        <div class="module-desc">Generate personalized onboarding checklists for new employees.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    if st.button("🧭 Onboarding Assistant", use_container_width=True, key="ob_main"):
+        st.switch_page("views/onboarding.py")
+    st.write("Generate personalized onboarding checklists for new employees.")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
-    <div class="module-card">
-        <div class="module-icon">📝</div>
-        <div class="module-title">Leave Request</div>
-        <div class="module-desc">Convert natural language into structured leave requests.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    if st.button("📝 Leave Request", use_container_width=True, key="lr_main"):
+        st.switch_page("views/leave.py")
+    st.write("Convert natural language into structured leave requests.")
 
 with col2:
-    st.markdown("""
-    <div class="module-card">
-        <div class="module-icon">📋</div>
-        <div class="module-title">Policy Comparison</div>
-        <div class="module-desc">Compare policy versions to detect changes and differences.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    if st.button("📋 Policy Comparison", use_container_width=True, key="pc_main"):
+        st.switch_page("views/policy_comparison.py")
+    st.write("Compare policy versions to detect changes and differences.")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
-    <div class="module-card">
-        <div class="module-icon">🚨</div>
-        <div class="module-title">Escalations</div>
-        <div class="module-desc">Monitor low-confidence queries sent for human review.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    if st.button("🚨 Escalations", use_container_width=True, key="esc_main"):
+        st.switch_page("views/escalation.py")
+    st.write("Monitor low-confidence queries sent for human review.")
 
 with col2:
-    st.markdown("""
-    <div class="module-card">
-        <div class="module-icon">⭐</div>
-        <div class="module-title">Feedback</div>
-        <div class="module-desc">Track answer quality and user sentiment metrics.</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.caption("👈 Click modules in the sidebar to open them")
+    if st.button("⭐ Feedback", use_container_width=True, key="fb_main"):
+        st.switch_page("views/feedback.py")
+    st.write("Track answer quality and user sentiment metrics.")
