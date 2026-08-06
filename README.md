@@ -1,150 +1,139 @@
 # HR Copilot
 
-An AI-powered HR assistant that answers policy questions, guides employee onboarding, and processes leave requests using retrieval-augmented generation (RAG) over company HR documents.
+An AI-powered HR assistant with 6 modules for knowledge Q&A, onboarding, leave requests, policy comparison, escalation tracking, and feedback analytics. Uses RAG with LangChain, ChromaDB, and Groq LLM.
 
-**[Live Demo](#deployment)** | **[GitHub](https://github.com/amolikas199/HR-Copilot)**
+**[Live Demo on Streamlit Cloud](#deployment)** | **[GitHub](https://github.com/amolikas199/HR-Copilot)**
 
-## Features
+## 🎯 Features
 
-- **📚 Knowledge Assistant** — Ask questions about your HR policies. Answers are grounded in documents with source citations and confidence scores.
-- **🧭 Onboarding Assistant** — Auto-generate onboarding checklists from company documents.
-- **📝 Leave Request Intelligence** — Convert plain English to structured leave requests (JSON).
+- **📚 Knowledge Assistant** — Semantic search over HR documents with source citations and confidence scores
+- **🧭 Onboarding Assistant** — Generate personalized onboarding checklists
+- **📝 Leave Request** — Convert plain English to structured leave requests
+- **📋 Policy Comparison** — Compare old and new policy versions to detect changes
+- **🚨 Escalation Tickets** — Auto-escalate low-confidence queries for HR review (persists in MongoDB)
+- **⭐ Feedback Analytics** — Track answer quality metrics with real-time persistence
 
-## Tech Stack
+## 🛠 Tech Stack
 
-**Backend:** FastAPI, Python, LangChain, Groq LLM  
-**Frontend:** React, Axios  
-**Database:** ChromaDB (vector) + HuggingFace embeddings  
-**Deployment:** Render (API) + Vercel (frontend)
+**Frontend:** Streamlit (dark mode UI + login auth)  
+**LLM & RAG:** LangChain, Groq API, HuggingFace embeddings  
+**Vector DB:** ChromaDB  
+**Data Persistence:** MongoDB Atlas  
+**Deployment:** Streamlit Cloud  
 
-## Architecture
+## 📊 Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│         React Frontend (Vercel)             │
-│  (Knowledge | Onboarding | Leave Request)   │
-└────────────────┬────────────────────────────┘
-                 │ HTTP/REST
-┌────────────────▼────────────────────────────┐
-│      FastAPI Backend (Render)               │
-│  /ask  /checklist  /extract-leave           │
-└────────────────┬────────────────────────────┘
-                 │
-    ┌────────────┼────────────┐
-    ▼            ▼            ▼
-ChromaDB    Groq API   HuggingFace
-(Vector DB) (LLM)      (Embeddings)
+┌──────────────────────────────────────────────┐
+│      Streamlit Cloud (All-in-One)            │
+│  ┌─────────────────────────────────────────┐ │
+│  │  Frontend (Dark Mode UI + Login)        │ │
+│  │  6 Modules (Knowledge | Onboarding | ...) │
+│  └──────────────────┬──────────────────────┘ │
+│                     │                        │
+│  ┌──────────────────▼──────────────────────┐ │
+│  │  RAG Pipeline (LangChain)               │ │
+│  │  ChromaDB + HuggingFace Embeddings      │ │
+│  └──────────────────┬──────────────────────┘ │
+│                     │                        │
+│     ┌───────────────┼───────────────┐        │
+│     ▼               ▼               ▼        │
+│  Groq LLM     MongoDB Atlas   HuggingFace   │
+│  (LLM)        (Persistence)   (Embeddings)  │
+└──────────────────────────────────────────────┘
 ```
 
-## Project Modules
+## 📋 Modules
 
 | Module | Status | Description |
 |--------|--------|-------------|
-| **Knowledge Assistant** | ✅ Done | RAG-based Q&A with semantic search |
-| **Onboarding Checklist** | ✅ Done | Document-grounded checklist generation |
-| **Leave Request Extractor** | ✅ Done | Natural language → structured JSON |
-| **Policy Comparison Engine** | 🔄 In Progress | Detects changes between policy versions |
+| **Knowledge Assistant** | ✅ | RAG Q&A with semantic search & source attribution |
+| **Onboarding Assistant** | ✅ | Document-grounded checklist generation |
+| **Leave Request** | ✅ | NLP extraction → structured JSON |
+| **Policy Comparison** | ✅ | Detects added/removed/modified sections |
+| **Escalation Engine** | ✅ | Routes low-confidence queries to HR (MongoDB persistence) |
+| **Feedback Loop** | ✅ | Tracks helpful/unhelpful ratings with analytics (MongoDB persistence) |
 
-## Setup & Local Development
+## 🚀 Deployment (Streamlit Cloud)
 
-### Prerequisites
-- Python 3.9+, Node 16+
-- Groq API key (free at [groq.com](https://groq.com))
+1. **Create Streamlit Cloud account** at [streamlit.io](https://streamlit.io)
+2. **Connect GitHub repo** → `amolikas199/HR-Copilot`
+3. **Add secrets** (Settings → Secrets):
+   ```
+   GROQ_API_KEY = "your_groq_api_key"
+   MONGO_URI = "mongodb+srv://username:password@cluster.mongodb.net/hr_copilot?retryWrites=true&w=majority"
+   ```
+4. **Deploy** — Live in seconds!
 
-### Installation
+**Login credentials:** `hr_admin` / `demo123`
+
+## 💻 Local Development
 
 ```bash
 git clone https://github.com/amolikas199/HR-Copilot.git
-cd HR-Copilot
+cd "HR copilot"
 
-# Backend setup
-cd backend
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
+
 cp .env.example .env
-# Add your GROQ_API_KEY to .env
+# Add GROQ_API_KEY and MONGO_URI to .env
 
-# Build vector database (run once)
-python ../ingest.py
-
-# Start backend (from backend/ dir)
-uvicorn main:app --reload
-
-# Frontend setup (in new terminal)
-cd frontend
-npm install
-npm start
+streamlit run app.py
 ```
 
-Backend runs on `http://localhost:8000`, Frontend on `http://localhost:3000`
+Opens at `http://localhost:8501`
 
-## Usage Examples
+## 🔑 Key Features
 
-### Knowledge Assistant
-**Q:** "How many casual leaves do I get per year?"  
-**A:** [Answers from your handbook with page citations and confidence score]
+✨ **Dark Mode UI** — Modern gradient theme with professional navigation  
+🔐 **Login Auth** — Demo user authentication  
+🧠 **Confidence Scoring** — Know when the AI is uncertain  
+📚 **Source Attribution** — Every answer cites the source document  
+💾 **Real-Time Persistence** — MongoDB integration for escalations & feedback  
+📊 **Analytics Dashboard** — Track feedback & escalation metrics  
 
-### Onboarding Checklist
-Generates a markdown checklist of all onboarding requirements from your documents.
+## 📝 Usage Examples
 
-### Leave Request
-**Input:** "I need leave from 12th to 16th for medical reasons"  
-**Output:**
-```json
-{
-  "leave_type": "Sick Leave",
-  "start_date": "2026-07-12",
-  "end_date": "2026-07-16",
-  "reason": "Medical",
-  "total_days": 5
-}
+**Knowledge Assistant**
+```
+Q: How many vacation days do I get?
+A: [Answer from handbook with confidence: 87% and source page]
 ```
 
-## Key Design Decisions
+**Escalation System**
+```
+- Low confidence answer (< 50%) → Auto-escalate to HR team
+- Data persists in MongoDB Atlas
+- View all escalations in real-time dashboard
+```
 
-- **Local Embeddings:** Uses HuggingFace embeddings to keep data private (no external API calls)
-- **Confidence Scoring:** Returns cosine similarity scores so users know how confident the system is
-- **Source Attribution:** Every answer cites the specific document and page it came from
-- **Structured Output:** Leave requests are extracted as JSON using LangChain's structured output
+**Feedback Analytics**
+```
+- Users rate answers (helpful/unhelpful)
+- Tracks helpful ratio, total feedback, trends
+- All data persists across app restarts
+```
 
-## Deployment
+## 📦 Requirements
 
-### Backend (Render)
-1. Push to GitHub
-2. Go to [render.com](https://render.com) → New Web Service
-3. Select GitHub repo → Choose `backend` folder
-4. Set start command: `uvicorn main:app --host 0.0.0.0 --port 8000`
-5. Add env var: `GROQ_API_KEY=your_key`
-6. Deploy
+- Python 3.9+
+- Groq API key (free tier: [groq.com](https://groq.com))
+- MongoDB Atlas account (free tier available)
+- GitHub repo for Streamlit Cloud deployment
 
-Get your backend URL (e.g., `https://hr-copilot-api.onrender.com`)
+## 🎓 Design Highlights
 
-### Frontend (Vercel)
-1. Go to [vercel.com](https://vercel.com) → Import Project
-2. Select GitHub repo → Choose `frontend` folder
-3. Add env var: `REACT_APP_API_URL=https://your-backend-url`
-4. Deploy
+- **Privacy:** Uses local embeddings (HuggingFace) — no data sent to external APIs
+- **Reliability:** Confidence thresholds prevent hallucinations
+- **Persistence:** MongoDB Atlas ensures data survives app restarts
+- **User Experience:** Dark mode, instant feedback, intuitive navigation
 
-Live: `https://hr-copilot.vercel.app`
-
-## API Endpoints
-
-- `POST /ask` — Answer HR question
-- `POST /checklist` — Generate onboarding checklist
-- `POST /extract-leave` — Extract structured leave request
-- `GET /health` — Health check
-
-## Future Enhancements
-
-- Policy Comparison Engine
-- Escalation System (route to HR)
-- User feedback loop
-
-## License
+## 📄 License
 
 MIT
 
-## Author
+## 👤 Author
 
-Amolika Singh | [GitHub](https://github.com/amolikas199) | [LinkedIn](https://linkedin.com/in/amolikas199)
+Amolika Singh | [GitHub](https://github.com/amolikas199)
