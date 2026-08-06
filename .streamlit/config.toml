@@ -1,16 +1,14 @@
 # Streamlit settings for this project.
 
 [server]
-headless = true            # don't try to auto-open a browser tab on launch
-fileWatcherType = "none"   # DON'T auto-reload — stops OneDrive/background file
-                           # changes from restarting the app mid-use
-runOnSave = false          # only restart when YOU relaunch it
+headless = true
+fileWatcherType = "none"
+runOnSave = false
 
-# --- Dark palette: Pitch Black bg + Bubblegum Pink accent + minimal white ---
 [theme]
-base = "dark"                         # dark base so widgets render correctly
-primaryColor = "#EA526F"              # Bubblegum Pink -> buttons, links, accents
-backgroundColor = "#070600"           # Pitch Black    -> main background
-secondaryBackgroundColor = "#0F0E0D"  # near-black      -> sidebar + cards (subtle lift)
-textColor = "#F7F7FF"                 # Ghost White    -> text (used minimally)
+base = "light"
+primaryColor = "#10b981"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f9fafb"
+textColor = "#111827"
 font = "sans serif"
