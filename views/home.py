@@ -3,17 +3,17 @@ import streamlit as st
 st.markdown("""
 <style>
     .module-card {
-        background: linear-gradient(135deg, #1a1f2e 0%, #16212b 100%);
-        border: 2px solid #2d3748;
-        border-radius: 12px;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
         padding: 24px;
         transition: all 0.3s ease;
         height: 100%;
     }
 
     .module-card:hover {
-        border-color: #60a5fa;
-        box-shadow: 0 8px 16px rgba(96, 165, 250, 0.2);
+        border-color: #10b981;
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
         transform: translateY(-4px);
     }
 
@@ -23,64 +23,76 @@ st.markdown("""
     }
 
     .module-title {
-        font-size: 20px;
-        font-weight: bold;
-        color: #60a5fa;
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
         margin-bottom: 8px;
     }
 
     .module-desc {
         font-size: 14px;
-        color: #cbd5e1;
+        color: #6b7280;
         margin-bottom: 16px;
         line-height: 1.6;
     }
 
-    .hero {
-        background: linear-gradient(135deg, #1a1f2e 0%, #16212b 100%);
-        border: 2px solid #2d3748;
-        border-radius: 12px;
-        padding: 32px;
-        margin-bottom: 32px;
+    .stat-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
         text-align: center;
     }
 
-    .hero-title {
-        font-size: 32px;
-        font-weight: bold;
-        background: linear-gradient(90deg, #60a5fa 0%, #818cf8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 12px;
+    .stat-number {
+        font-size: 28px;
+        font-weight: 700;
+        color: #10b981;
+        margin-bottom: 4px;
     }
 
-    .hero-subtitle {
-        font-size: 16px;
-        color: #94a3b8;
-        margin-bottom: 8px;
+    .stat-label {
+        font-size: 13px;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div class="hero">
-    <div class="hero-title">🤖 HR Copilot</div>
-    <div class="hero-subtitle">Your intelligent HR assistant powered by AI</div>
-    <p style="color: #cbd5e1; margin-top: 16px;">
-        Get instant, grounded answers from your company's HR documents.<br>
-        Every answer includes sources and confidence scores.
-    </p>
-</div>
-""", unsafe_allow_html=True)
+st.title("HR Copilot")
+st.write("Get instant answers from your company's HR documents with AI-powered search and analysis.")
 
-st.subheader("📊 Quick Stats", divider=True)
+st.divider()
+
 col1, col2, col3 = st.columns(3)
-col1.metric("Active Modules", "6", "Ready to use")
-col2.metric("Features", "Full-stack AI", "Persistence enabled")
-col3.metric("Data Source", "Real-time", "MongoDB Atlas")
 
-st.subheader("🚀 Modules", divider=True)
+with col1:
+    st.markdown("""
+    <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Modules</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Grounded</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="stat-card">
+        <div class="stat-number">Live</div>
+        <div class="stat-label">MongoDB</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("")
+st.subheader("Available Modules")
 
 col1, col2 = st.columns(2)
 
@@ -89,20 +101,20 @@ with col1:
     <div class="module-card">
         <div class="module-icon">📚</div>
         <div class="module-title">Knowledge Assistant</div>
-        <div class="module-desc">Ask HR questions and get answers from your company documents with source citations.</div>
+        <div class="module-desc">Ask HR policy questions and get answers grounded in your company documents.</div>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("views/knowledge.py", label="📚 Open Knowledge Assistant", use_container_width=True)
+    st.page_link("views/knowledge.py", label="Open", use_container_width=True)
 
 with col2:
     st.markdown("""
     <div class="module-card">
         <div class="module-icon">🧭</div>
         <div class="module-title">Onboarding Assistant</div>
-        <div class="module-desc">Get onboarding help or generate a personalized checklist for new joiners.</div>
+        <div class="module-desc">Generate personalized onboarding checklists for new employees.</div>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("views/onboarding.py", label="🧭 Open Onboarding", use_container_width=True)
+    st.page_link("views/onboarding.py", label="Open", use_container_width=True)
 
 col1, col2 = st.columns(2)
 
@@ -111,20 +123,20 @@ with col1:
     <div class="module-card">
         <div class="module-icon">📝</div>
         <div class="module-title">Leave Request</div>
-        <div class="module-desc">Convert plain English descriptions into structured leave requests instantly.</div>
+        <div class="module-desc">Convert natural language into structured leave requests.</div>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("views/leave.py", label="📝 Open Leave Request", use_container_width=True)
+    st.page_link("views/leave.py", label="Open", use_container_width=True)
 
 with col2:
     st.markdown("""
     <div class="module-card">
         <div class="module-icon">📋</div>
         <div class="module-title">Policy Comparison</div>
-        <div class="module-desc">Compare old and new policy documents to see exactly what changed.</div>
+        <div class="module-desc">Compare policy versions to detect changes and differences.</div>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("views/policy_comparison.py", label="📋 Open Policy Comparison", use_container_width=True)
+    st.page_link("views/policy_comparison.py", label="Open", use_container_width=True)
 
 col1, col2 = st.columns(2)
 
@@ -132,18 +144,18 @@ with col1:
     st.markdown("""
     <div class="module-card">
         <div class="module-icon">🚨</div>
-        <div class="module-title">Escalation Tickets</div>
-        <div class="module-desc">Monitor low-confidence queries that need human review. Persists in MongoDB.</div>
+        <div class="module-title">Escalations</div>
+        <div class="module-desc">Monitor low-confidence queries sent for human review.</div>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("views/escalation.py", label="🚨 View Escalations", use_container_width=True)
+    st.page_link("views/escalation.py", label="Open", use_container_width=True)
 
 with col2:
     st.markdown("""
     <div class="module-card">
         <div class="module-icon">⭐</div>
-        <div class="module-title">Feedback Analytics</div>
-        <div class="module-desc">Track user feedback and sentiment on answer quality. Real-time metrics & persistence.</div>
+        <div class="module-title">Feedback</div>
+        <div class="module-desc">Track answer quality and user sentiment metrics.</div>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("views/feedback.py", label="⭐ View Analytics", use_container_width=True)
+    st.page_link("views/feedback.py", label="Open", use_container_width=True)

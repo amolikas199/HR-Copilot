@@ -6,57 +6,59 @@ import feedback
 
 st.markdown("""
 <style>
-    .question-input {
-        border-radius: 8px;
-        border: 2px solid #2d3748;
-        background: #1a1f2e;
-        padding: 12px;
+    .example-pill {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 13px;
+        text-align: center;
     }
 
-    .example-btn {
-        background: linear-gradient(135deg, #2d3748 0%, #1a1f2e 100%);
-        border: 2px solid #2d3748;
-        border-radius: 8px;
-        padding: 12px;
-        color: #94a3b8;
-        transition: all 0.3s ease;
+    .example-pill:hover {
+        border-color: #10b981;
+        background: #ecfdf5;
+        color: #10b981;
     }
 
-    .example-btn:hover {
-        border-color: #60a5fa;
-        color: #60a5fa;
+    .feedback-btn {
+        font-size: 14px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 st.title("📚 Knowledge Assistant")
-st.markdown("Ask HR policy questions and get answers with source citations and confidence scores.")
+st.write("Ask questions about your company's HR policies and get instant answers with sources.")
+
+st.divider()
 
 EXAMPLES = [
     "How many vacation days do I get?",
     "What is the resignation notice period?",
 ]
 
-st.markdown("**Quick Examples** — Click any to try:", unsafe_allow_html=True)
+st.markdown("**Quick examples:**")
 picked = None
 cols = st.columns(len(EXAMPLES))
 for col, example in zip(cols, EXAMPLES):
-    if col.button(example, use_container_width=True, key=f"kb_ex_{example}"):
-        picked = example
+    with col:
+        st.markdown(f'<div class="example-pill">{example}</div>', unsafe_allow_html=True)
+        if st.button("Ask", use_container_width=True, key=f"kb_ex_{example}"):
+            picked = example
 
 st.divider()
 
 with st.form("kb_form"):
-    typed = st.text_input("Your question:", placeholder="e.g. How many vacation days do I get?")
-    col1, col2 = st.columns([8, 2])
-    with col2:
-        submitted = st.form_submit_button("🔍 Ask", use_container_width=True, type="primary")
+    typed = st.text_input("Your question", placeholder="e.g. What are the work-from-home policies?")
+    submitted = st.form_submit_button("Search", use_container_width=True, type="primary")
 
 question = picked or (typed if submitted else None)
 
 if question:
     try:
-        with st.spinner("🔎 Searching documents..."):
+        with st.spinner("Searching documents..."):
             result = ask(question)
     except Exception:
         st.error("Something went wrong. Please try again.")
@@ -64,16 +66,16 @@ if question:
     show_answer(result)
 
     st.divider()
-    st.subheader("📊 Was this helpful?")
+    st.subheader("Was this answer helpful?")
     col1, col2 = st.columns(2)
 
     with col1:
         if st.button("👍 Yes, helpful", use_container_width=True):
             feedback.save_feedback(question, result["answer"], result["chunks"], "helpful")
-            st.success("✓ Thank you for your feedback!")
+            st.success("Thank you for your feedback!")
 
     with col2:
-        if st.button("👎 No, not helpful", use_container_width=True):
+        if st.button("👎 No, escalate", use_container_width=True):
             feedback.save_feedback(question, result["answer"], result["chunks"], "unhelpful")
             escalation.escalate_query(question, result["confidence"], result["answer"])
-            st.warning("⚠️ Escalated to HR team for review.")
+            st.info("This has been escalated to HR for review.")
