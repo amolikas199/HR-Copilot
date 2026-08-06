@@ -19,7 +19,10 @@ with st.sidebar:
     st.caption("Grounded answers from your HR documents.")
 
     # Show which documents make up the knowledge base.
-    pdfs = sorted(f for f in os.listdir("data") if f.lower().endswith(".pdf"))
+    try:
+        pdfs = sorted(f for f in os.listdir("data") if f.lower().endswith(".pdf"))
+    except FileNotFoundError:
+        pdfs = []
     with st.expander(f"📁 Knowledge base ({len(pdfs)} docs)"):
         for name in pdfs:
             st.write(f"- {name}")
