@@ -1,8 +1,6 @@
 import streamlit as st
 from rag import ask
 from ui_utils import show_answer
-import escalation
-import feedback
 
 st.markdown("""
 <style>
@@ -64,18 +62,3 @@ if question:
         st.error("Something went wrong. Please try again.")
         st.stop()
     show_answer(result)
-
-    st.divider()
-    st.subheader("Was this answer helpful?")
-    col1, col2 = st.columns(2)
-
-    with col1:
-        if st.button("👍 Yes, helpful", use_container_width=True):
-            feedback.save_feedback(question, result["answer"], result["chunks"], "helpful")
-            st.success("Thank you for your feedback!")
-
-    with col2:
-        if st.button("👎 No, escalate", use_container_width=True):
-            feedback.save_feedback(question, result["answer"], result["chunks"], "unhelpful")
-            escalation.escalate_query(question, result["confidence"], result["answer"])
-            st.info("This has been escalated to HR for review.")
