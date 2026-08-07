@@ -17,8 +17,6 @@ pages = [
     st.Page("views/onboarding.py", title="🧭 Onboarding"),
     st.Page("views/leave.py", title="📝 Leave"),
     st.Page("views/policy_comparison.py", title="📋 Policies"),
-    st.Page("views/escalation.py", title="🚨 Escalations"),
-    st.Page("views/feedback.py", title="⭐ Feedback"),
 ]
 
 st.navigation(pages).run()
